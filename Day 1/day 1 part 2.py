@@ -1,7 +1,9 @@
 file_contents = []
 
-forward = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9'}
-backward = {'eno': '1', 'owt': '2', 'eerht': '3', 'ruof': '4', 'evif': '5', 'xis': '6', 'neves': '7', 'thgie': '8', 'enin': '9'}
+forward = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7', 'eight': '8',
+           'nine': '9'}
+backward = {'eno': '1', 'owt': '2', 'eerht': '3', 'ruof': '4', 'evif': '5', 'xis': '6', 'neves': '7', 'thgie': '8',
+            'enin': '9'}
 
 with open('input.txt', 'r') as file:
     for line in file:
@@ -26,6 +28,10 @@ def extract_digits(word):
         if b_element in word:
             return backward[b_element]
 
+
+def add_sum(num, tot):
+    tot += int(num)
+    return tot
 
 
 for line in file_contents:
@@ -52,23 +58,18 @@ for line in file_contents:
 
     if line[left].isdigit() and line[right].isdigit():
         number = line[left] + line[right]
-        number = int(number)
-        total += number
+        total = add_sum(number, total)
     elif not line[left].isdigit() and not line[right].isdigit():
         left_digit, right_digit = extract_digits(word_left), extract_digits(word_right)
         number = left_digit + right_digit
-        number = int(number)
-        total += number
+        total = add_sum(number, total)
     elif line[left].isdigit() and not line[right].isdigit():
         right_digit = extract_digits(word_right)
         number = line[left] + right_digit
-        number = int(number)
-        total += number
+        total = add_sum(number, total)
     elif not line[left].isdigit() and line[right].isdigit():
         left_digit = extract_digits(word_left)
         number = left_digit + line[right]
-        number = int(number)
-        total += number
-
+        total = add_sum(number, total)
 
 print(total)
